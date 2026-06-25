@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андреев Максим | Выход из системы</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #06070d;
+            --card-bg: rgba(20, 24, 38, 0.65);
+            --card-border: rgba(69, 243, 255, 0.15);
+            --accent-glow: rgba(69, 243, 255, 0.8);
+            --accent-cyan: #45f3ff;
+            --accent-purple: #9d4edd;
+            --text-main: #ffffff;
+            --text-muted: #a0aabf;
+            --radius-lg: 28px;
+            --radius-md: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-sphere {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(69,243,255,0.08) 0%, transparent 70%);
+            top: -10%;
+            right: -10%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-sphere-2 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(157,78,221,0.05) 0%, transparent 70%);
+            bottom: 20%;
+            left: -15%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 25px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .badge-status {
+            background: rgba(69, 243, 255, 0.07);
+            border: 1px solid var(--card-border);
+            color: var(--accent-cyan);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(69, 243, 255, 0.1);
+        }
+
+        .hero {
+            padding: 90px 0 60px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-tagline {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 25px;
+            letter-spacing: -1.5px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 19px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 45px auto;
+            font-weight: 400;
+        }
+
+        .btn-group {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #1bc4d0 100%);
+            color: #000;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            border-radius: 100px;
+            box-shadow: 0 8px 25px rgba(69, 243, 255, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(69, 243, 255, 0.5);
+        }
+
+        .about-video-section {
+            padding: 40px 0 80px 0;
+        }
+
+        .video-container-main {
+            max-width: 380px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .video-container-main::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: calc(var(--radius-lg) + 12px);
+            z-index: -1;
+            opacity: 0.25;
+            filter: blur(20px);
+        }
+
+        .frame-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        }
+
+        .frame-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 span {
+            color: var(--accent-cyan);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .grid-section {
+            padding: 90px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.005);
+        }
+
+        .cards-list {
+            display: block;
+        }
+
+        .luxury-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 45px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .luxury-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-purple));
+            opacity: 0.7;
+        }
+
+        .luxury-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(69, 243, 255, 0.4);
+            box-shadow: 0 30px 60px rgba(69, 243, 255, 0.08);
+        }
+
+        .card-number {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .luxury-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .luxury-card p {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: #e2e8f0;
+            font-size: 15px;
+        }
+
+        .bullet-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+            font-size: 14px;
+        }
+
+        .cases-section {
+            padding: 90px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .cases-container-box {
+            display: block;
+            text-align: center;
+        }
+
+        .case-card-wrapper {
+            display: inline-block;
+            width: 100%;
+            max-width: 245px;
+            margin: 15px;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .case-video-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #000;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: border 0.3s;
+        }
+
+        .case-card-wrapper:hover .case-video-box {
+            border-color: var(--accent-cyan);
+        }
+
+        .case-video-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .case-info-title {
+            margin-top: 15px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        footer {
+            background: #030407;
+            padding: 80px 0 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+        }
+
+        .footer-cols {
+            display: block;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand-col {
+            margin-bottom: 40px;
+        }
+
+        .footer-brand-col p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-top: 15px;
+            max-width: 350px;
+        }
+
+        .footer-contacts-col h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+            color: #fff;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-contacts-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-cyan);
+        }
+
+        .contact-row {
+            margin-bottom: 18px;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .contact-row strong {
+            color: #fff;
+        }
+
+        .contact-link-social {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+            border-bottom: 1px dashed rgba(69, 243, 255, 0.3);
+        }
+
+        .contact-link-social:hover {
+            opacity: 0.8;
+        }
+
+        .bottom-bar {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .legal-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.2s;
+        }
+
+        .legal-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 3, 6, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .modal-window {
+            background: #0d111a;
+            border: 1px solid rgba(69, 243, 255, 0.2);
+            padding: 45px;
+            border-radius: var(--radius-lg);
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: var(--text-muted);
+            font-size: 32px;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--accent-cyan);
+        }
+
+        .modal-window h2 {
+            margin-bottom: 25px;
+            font-size: 24px;
+            color: var(--accent-cyan);
+            font-weight: 800;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+
+        .modal-window h3 {
+            font-size: 17px;
+            color: #fff;
+            margin: 20px 0 10px 0;
+            font-weight: 700;
+        }
+
+        .modal-window p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .modal-window ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        .modal-window li {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .modal-date {
+            font-size: 13px;
+            color: var(--accent-purple);
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero-desc { font-size: 16px; }
+            .section-header h2 { font-size: 28px; }
+            .luxury-card { padding: 30px; }
+            .case-card-wrapper { max-width: 100%; display: block; margin: 25px auto; }
+            .video-container-main { max-width: 290px; }
+            .bottom-bar { flex-direction: column; text-align: center; }
+            .legal-links a { margin: 10px 10px 0 10px; display: inline-block; }
+            .modal-window { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="glow-sphere"></div>
+    <div class="glow-sphere-2"></div>
+
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width:100%;">
+            <div class="logo-block">
+                <div class="logo">EXIT.SYSTEM</div>
+                <div class="logo-sub">Выход из системы</div>
+            </div>
+            <div class="badge-status">ИНН 645291744838 • Самозанятый</div>
+        </div>
+    </header>
+
+    <section class="container hero">
+        <span class="hero-tagline">Медиа-продюсирование & Комплексный маркетинг</span>
+        <h1>Андреев Максим<br><span>Перезагрузка твоего бизнеса</span></h1>
+        <p class="hero-desc">Основатель рекламного агентства полного цикла, продюсер высокоохватного медиаконтента. Я помогаю ломать старые алгоритмы, строить сильные личные бренды и запускать высокодоходные продукты в интернете с нуля.</p>
+        <div class="btn-group">
+            <a href="https://t.me/maksimexits" target="_blank" class="cta-button">Связаться в Telegram</a>
+        </div>
+    </section>
+
+    <section class="container about-video-section">
+        <div class="section-header">
+            <h2>Знакомство с <span>Архитектурой Системы</span></h2>
+            <p>Короткий разбор того, как работает современный трафик через Reels/Shorts и как выжимать максимум прибыли из контента.</p>
+        </div>
+        
+        <div class="video-container-main">
+            <div class="frame-wrapper">
+                <iframe src="https://www.youtube.com/embed/vYHxq8wJEc0?playlist=vYHxq8wJEc0&loop=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Инструменты и <span>Услуги</span></h2>
+                <p>Мы не просто настраиваем рекламу — мы строим автономную экосистему генерации клиентов и денег для вашего продукта.</p>
+            </div>
+
+            <div class="cards-list">
+                <div class="luxury-card">
+                    <div class="card-number">Направление 01</div>
+                    <h3>Продюсирование & Запуск Авторских Продуктов</h3>
+                    <p>Трансформируем ваш хаотичный экспертный бэкграунд в упакованный, премиальный продукт с высоким чеком. Мы берем на себя полный цикл разработки: от глубокого анализа целевой аудитории и создания выверенной методологии обучения до сквозного управления продажами, воронками и командой кураторов.</p>
+                    <ul class="bullet-list">
+                        <li>Разработка уникальной торговой архитектуры инфопродукта</li>
+                        <li>Построение контентных воронок и триггерных цепочек</li>
+                        <li>Обучение продажам, закрытию сделок и выводу на высокий чек</li>
+                    </ul>
+                </div>
+
+                <div class="luxury-card">
+                    <div class="card-number">Направление 02</div>
+                    <h3>Рекламное Агентство Полного Цикла</h3>
+                    <p>Хватит сливать бюджеты на бессмысленный трафик. Мы создаем управляемый поток целевых лидов и платежеспособных учеников в ваши проекты. Внедряем окупаемые рекламные стратегии, тестируем гипотезы, пишем мощные сценарии для высокоохватных видеороликов и выстраиваем автоворонки, превращающие холодного зрителя в постоянного покупателя.</p>
+                    <ul class="bullet-list">
+                        <li>Создание и дистрибуция вирусных Reels / Shorts стратегий</li>
+                        <li>Привлечение целевого трафика из Telegram Ads, блогеров и контекста</li>
+                        <li>Сквозная аналитика окупаемости каждого вложенного рубля</li>
+                    </ul>
+                </div>
+
+                <div class="luxury-card">
+                    <div class="card-number">Направление 03</div>
+                    <h3>Личный Бренд & Telegram-Маркетинг</h3>
+                    <p>Telegram-канал — это ваш личный цифровой банк, если вести его правильно. Мы учим выстраивать жесткое позиционирование, писать вовлекающие прогревающие посты, собирать лояльное ядро аудитории без огромных вложений и системно монетизировать канал через продажи собственных продуктов или наставничества.</p>
+                    <ul class="bullet-list">
+                        <li>Стратегия позиционирования личного бренда, отсекающая конкурентов</li>
+                        <li>Алгоритмы привлечения первых учеников и генерация прибыли из канала</li>
+                        <li>Управление командой, делегирование процессов и масштабирование агентства</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container cases-section">
+        <div class="section-header">
+            <h2>Твердые Результаты & <span>Кейсы</span></h2>
+            <p>Никакой воды — только реальные разборы, цифры и практические результаты внедрения нашей маркетинговой системы.</p>
+        </div>
+
+        <div class="cases-container-box">
+            <div class="case-card-wrapper">
+                <div class="case-video-box">
+                    <iframe src="https://www.youtube.com/embed/zygGul-Rwi8?playlist=zygGul-Rwi8&loop=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="case-info-title">Кейс Масштабирования #1</div>
+            </div>
+
+            <div class="case-card-wrapper">
+                <div class="case-video-box">
+                    <iframe src="https://www.youtube.com/embed/cI9cuzXS4J4?playlist=cI9cuzXS4J4&loop=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="case-info-title">Кейс Масштабирования #2</div>
+            </div>
+
+            <div class="case-card-wrapper">
+                <div class="case-video-box">
+                    <iframe src="https://www.youtube.com/embed/Iz7jokiBdzE?playlist=Iz7jokiBdzE&loop=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="case-info-title">Кейс Масштабирования #3</div>
+            </div>
+
+            <div class="case-card-wrapper">
+                <div class="case-video-box">
+                    <iframe src="https://www.youtube.com/embed/uapytgkWACc?playlist=uapytgkWACc&loop=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="case-info-title">Кейс Масштабирования #4</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-cols">
+                <div class="footer-brand-col">
+                    <div class="logo">EXIT.SYSTEM</div>
+                    <p>Интеллектуальные маркетинговые решения, ломающие привычные ограничения платформ. Создаем медиапродукты нового поколения.</p>
+                </div>
+                <div class="footer-contacts-col">
+                    <h4>Центр связи</h4>
+                    <div class="contact-row"><strong>Telegram:</strong> <a href="https://t.me/maksimexits" target="_blank" class="contact-link-social">@maksimexits</a></div>
+                    <div class="contact-row"><strong>Instagram:</strong> <a href="https://instagram.com/maksimexits" target="_blank" class="contact-link-social">@maksimexits</a></div>
+                    <div class="contact-row"><strong>Телефон:</strong> +7 (987) 389-47-42</div>
+                    <div class="contact-row"><strong>Email:</strong> maksimexitswork@gmail.com</div>
+                </div>
+            </div>
+
+            <div class="bottom-bar">
+                <div>
+                    © 2026 Андреев Максим Витальевич. Все права строго защищены.<br>
+                    ИНН: 645291744838 | Юридический статус: Самозанятый
+                </div>
+                <div class="legal-links">
+                    <a href="#" onclick="openDoc('modalPrivacy'); return false;">Политика конфиденциальности</a>
+                    <a href="#" onclick="openDoc('modalOffer'); return false;">Публичная оферта</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Юридическое окно: Оферта -->
+    <div id="modalOffer" class="modal-overlay">
+        <div class="modal-window">
+            <span class="modal-close-btn" onclick="closeDoc('modalOffer')">&times;</span>
+            <h2>Публичная оферта на оказание услуг</h2>
+            <div class="modal-date">Дата публикации: 25.06.2026</div>
+            <p>Настоящий документ является публичной офертой Андреева Максима, плательщика налога на профессиональный доход (самозанятого) (далее — «Исполнитель»), адресованной любому заинтересованному лицу (далее — «Заказчик»), и содержит все существенные условия по оказанию информационно-консультационных услуг в сфере маркетинга, продаж и личного бренда.</p>
+            <p>Оплата услуг Исполнителя означает полное и безусловное согласие Заказчика с условиями настоящей оферты в соответствии со статьёй 438 Гражданского кодекса РФ.</p>
+            
+            <h3>1. Предмет оферты</h3>
+            <p>Исполнитель оказывает Заказчику услуги в одном или нескольких направлениях:</p>
+            <ul>
+                <li>консультирование и обучение в области маркетинга и продвижения в интернете;</li>
+                <li>консультирование и обучение в области продаж и привлечения клиентов;</li>
+                <li>помощь в построении личного бренда и ведении Telegram-канала;</li>
+                <li>продюсирование эксперта: сопровождение в упаковке знаний и запуске обучающих продуктов.</li>
+            </ul>
+            <p>Конкретный состав, объём, стоимость и сроки оказания услуг согласовываются сторонами дополнительно — в переписке, счёте или индивидуальном договоре — и являются неотъемлемой частью отношений сторон по настоящей оферте.</p>
+
+            <h3>2. Порядок заключения договора</h3>
+            <p>Договор считается заключённым с момента совершения Заказчиком одного из следующих действий (акцепта):</p>
+            <ul>
+                <li>оплаты услуг по выставленному счёту или ссылке на оплату;</li>
+                <li>подписания индивидуального договора или акта с Исполнителем;</li>
+                <li>письменного подтверждения согласия с условиями оферты в переписке.</li>
+            </ul>
+
+            <h3>3. Стоимость и порядок оплаты</h3>
+            <p>Стоимость услуг определяется индивидуально в зависимости от выбранного формата сотрудничества и сообщается Заказчику до начала оказания услуг. Оплата производится в безналичной форме на реквизиты Исполнителя как самозанятого. Исполнитель предоставляет Заказчику чек через приложение «Мой налог» после получения оплаты.</p>
+
+            <h3>4. Права и обязанности Исполнителя</h3>
+            <ul>
+                <li>оказать услуги лично или с привлечением третьих лиц, оставаясь ответственным перед Заказчиком за результат взаимодействия;</li>
+                <li>предоставлять Заказчику материалы, рекомендации и обратную связь в рамках согласованного формата;</li>
+                <li>не разглашать сведения, полученные от Заказчика в ходе сотрудничества, третьим лицам без согласия Заказчика, кроме случаев, предусмотренных законом.</li>
+            </ul>
+
+            <h3>5. Права и обязанности Заказчика</h3>
+            <ul>
+                <li>своевременно предоставлять информацию, необходимую для оказания услуг;</li>
+                <li>оплачивать услуги в порядке и в сроки, согласованные с Исполнителем;</li>
+                <li>самостоятельно применять полученные рекомендации; Исполнитель не несёт ответственности за бездействие Заказчика.</li>
+            </ul>
+
+            <h3>6. Результат услуг и отсутствие гарантий дохода</h3>
+            <p>Исполнитель передаёт Заказчику знания, рекомендации и инструменты в области маркетинга, продаж и построения личного бренда. Конечный финансовый результат (рост дохода, числа подписчиков, клиентов или продаж) зависит от действий самого Заказчика, его ниши, рынка и иных факторов, на которые Исполнитель не может влиять напрямую, и не гарантируется. Кейсы и примеры, представленные на Сайте, носят иллюстративный характер и не являются обещанием конкретного результата.</p>
+
+            <h3>7. Ответственность сторон</h3>
+            <p>Стоны несут ответственность за неисполнение или ненадлежащее исполнение своих обязательств в соответствии с действующим законодательством РФ. Исполнитель не возмещает Заказчику упущенную выгоду или убытки, возникшие вследствие самостоятельных решений Заказчика, принятых на основе полученных консультаций.</p>
+
+            <h3>8. Отказ от услуг и возврат оплаты</h3>
+            <p>Заказчик вправе отказаться от услуг до начала их оказания с возвратом уплаченной суммы в полном объёме. Если услуги частично оказаны, возврату подлежит сумма за фактически неоказанную часть услуг. Порядок и сроки возврата согласовываются сторонами индивидуально через контакты, указанные в разделе 10.</p>
+
+            <h3>9. Срок действия и изменение оферты</h3>
+            <p>Оферта действует до момента её отзыва или изменения Исполнителем. Исполнитель вправе вносить изменения в текст оферты в одностороннем порядке; актуальная редакция всегда размещена на этой странице. Изменения не распространяются на договоры, заключённые до даты публикации новой редакции.</p>
+
+            <h3>10. Реквизиты и контакты Исполнителя</h3>
+            <p>Самозанятый Андреев Максим<br>
+            Плательщик налога на профессиональный доход (НПД)<br>
+            ИНН: 645291744838<br>
+            Email: maksimexitswork@gmail.com<br>
+            Телефон: +7 987 389-47-42<br>
+            Telegram: @maksimexits</p>
+        </div>
+    </div>
+
+    <!-- Юридическое окно: Политика -->
+    <div id="modalPrivacy" class="modal-overlay">
+        <div class="modal-window">
+            <span class="modal-close-btn" onclick="closeDoc('modalPrivacy')">&times;</span>
+            <h2>Политика конфиденциальности</h2>
+            <div class="modal-date">Дата публикации: 25.06.2026</div>
+            <p>Настоящая Политика конфиденциальности (далее — «Политика») определяет порядок обработки персональных данных пользователей сайта, который принадлежит самозанятому Андрееву Максиму (далее — «Оператор», «мы»).</p>
+            <p>Используя Сайт и оставляя свои данные через формы обратной связи, мессенджеры или почту, указанные на Сайте, пользователь подтверждает согласие с условиями настоящей Политики.</p>
+
+            <h3>1. Какие данные мы собираем</h3>
+            <ul>
+                <li>Имя и/или псевдоним, который пользователь указывает при обращении;</li>
+                <li>Контактные данные: номер телефона, адрес электронной почты, имя пользователя (username) в Telegram или Instagram;</li>
+                <li>Сведения, которые пользователь добровольно сообщает при переписке (например, описание задачи, нишу, цели обращения);</li>
+                <li>Технические данные при посещении Сайта: тип устройства, браузер, обезличенная статистика посещений (если на Сайте подключены счётчики аналитики).</li>
+            </ul>
+
+            <h3>2. Цели обработки данных</h3>
+            <ul>
+                <li>Связь с пользователем по его обращению, консультирование по услугам;</li>
+                <li>Подготовка коммерческого предложения, заключение и исполнение договора оказания услуг;</li>
+                <li>Информирование о новых услугах, материалах и предложениях (при согласии пользователя);</li>
+                <li>Улучшение качества Сайта и услуг.</li>
+            </ul>
+
+            <h3>3. Правовые основания обработки</h3>
+            <p>Обработка персональных данных осуществляется на основании согласия пользователя, выраженного через факт обращения к Оператору (направление сообщения, заявки, заполнение формы), а также в целях исполнения договора, если такой договор заключён.</p>
+
+            <h3>4. Передача данных третьим лицам</h3>
+            <p>Оператор не передаёт персональные данные третьим лицам, за исключением случаев:</p>
+            <ul>
+                <li>когда это необходимо для оказания услуг (например, сервисы рассылок, мессенджеры, платёжные системы);</li>
+                <li>когда передача данных требуется по законному требованию государственных органов.</li>
+            </ul>
+
+            <h3>5. Хранение и защита данных</h3>
+            <p>Персональные данные хранятся в течение срока, необходимого для достижения целей обработки, либо до отзыва согласия пользователем. Оператор принимает разумные организационные и технические меры для защиты данных от несанкционированного доступа, изменения, раскрытия или уничтожения.</p>
+
+            <h3>6. Права пользователя</h3>
+            <p>Пользователь имеет право:</p>
+            <ul>
+                <li>запросить информацию о том, какие его данные обрабатываются;</li>
+                <li>потребовать уточнения, исправления или удаления своих данных;</li>
+                <li>отозвать согласие на обработку данных в любой момент.</li>
+            </ul>
+            <p>Для реализации этих прав достаточно написать на электронную почту maksimexitswork@gmail.com или в Telegram @maksimexits.</p>
+
+            <h3>7. Файлы cookie</h3>
+            <p>Сайт может использовать файлы cookie и сервисы веб-аналитики для сбора обезличенной статистики посещаемости. Пользователь может отключить cookie в настройках своего браузера — это не повлияет на возможность связаться с Оператором.</p>
+
+            <h3>8. Изменения Политики</h3>
+            <p>Оператор может обновлять настоящую Политику. Актуальная версия всегда размещена на этой странице. Продолжение использования Сайта после внесения изменений означает согласие с обновлённой Политикой.</p>
+
+            <h3>9. Контакты Оператора</h3>
+            <p>Самозанятый Андреев Максим<br>
+            ИНН: 645291744838<br>
+            Email: maksimexitswork@gmail.com<br>
+            Телефон: +7 987 389-47-42<br>
+            Telegram: @maksimexits</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        const particles = [];
+        const maxParticles = window.innerWidth < 768 ? 40 : 90;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = Math.random() * 1.8 + 0.5;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(69, 243, 255, 0.45)';
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < maxParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
