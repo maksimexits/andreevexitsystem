@@ -471,6 +471,7 @@
             text-decoration: none;
             margin-left: 20px;
             transition: color 0.2s;
+            cursor: pointer;
         }
 
         .legal-links a:hover {
@@ -719,14 +720,13 @@
                     ИНН: 645291744838 | Юридический статус: Самозанятый
                 </div>
                 <div class="legal-links">
-                    <a href="#" onclick="openDoc('modalPrivacy'); return false;">Политика конфиденциальности</a>
-                    <a href="#" onclick="openDoc('modalOffer'); return false;">Публичная оферта</a>
+                    <a onclick="openDoc('modalPrivacy')">Политика конфиденциальности</a>
+                    <a onclick="openDoc('modalOffer')">Публичная оферта</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Юридическое окно: Оферта -->
     <div id="modalOffer" class="modal-overlay">
         <div class="modal-window">
             <span class="modal-close-btn" onclick="closeDoc('modalOffer')">&times;</span>
@@ -774,7 +774,7 @@
             <p>Исполнитель передаёт Заказчику знания, рекомендации и инструменты в области маркетинга, продаж и построения личного бренда. Конечный финансовый результат (рост дохода, числа подписчиков, клиентов или продаж) зависит от действий самого Заказчика, его ниши, рынка и иных факторов, на которые Исполнитель не может влиять напрямую, и не гарантируется. Кейсы и примеры, представленные на Сайте, носят иллюстративный характер и не являются обещанием конкретного результата.</p>
 
             <h3>7. Ответственность сторон</h3>
-            <p>Стоны несут ответственность за неисполнение или ненадлежащее исполнение своих обязательств в соответствии с действующим законодательством РФ. Исполнитель не возмещает Заказчику упущенную выгоду или убытки, возникшие вследствие самостоятельных решений Заказчика, принятых на основе полученных консультаций.</p>
+            <p>Стороны несут ответственность за неисполнение или ненадлежащее исполнение своих обязательств в соответствии с действующим законодательством РФ. Исполнитель не возмещает Заказчику упущенную выгоду или убытки, возникшие вследствие самостоятельных решений Заказчика, принятых на основе полученных консультаций.</p>
 
             <h3>8. Отказ от услуг и возврат оплаты</h3>
             <p>Заказчик вправе отказаться от услуг до начала их оказания с возвратом уплаченной суммы в полном объёме. Если услуги частично оказаны, возврату подлежит сумма за фактически неоказанную часть услуг. Порядок и сроки возврата согласовываются сторонами индивидуально через контакты, указанные в разделе 10.</p>
@@ -792,14 +792,13 @@
         </div>
     </div>
 
-    <!-- Юридическое окно: Политика -->
     <div id="modalPrivacy" class="modal-overlay">
         <div class="modal-window">
             <span class="modal-close-btn" onclick="closeDoc('modalPrivacy')">&times;</span>
             <h2>Политика конфиденциальности</h2>
             <div class="modal-date">Дата публикации: 25.06.2026</div>
             <p>Настоящая Политика конфиденциальности (далее — «Политика») определяет порядок обработки персональных данных пользователей сайта, который принадлежит самозанятому Андрееву Максиму (далее — «Оператор», «мы»).</p>
-            <p>Используя Сайт и оставляя свои данные через формы обратной связи, мессенджеры или почту, указанные на Сайте, пользователь подтверждает согласие с условиями настоящей Политики.</p>
+            <p>Используя Сайт и оставляя свои данные через формы обратной связи, мессенджеры или почту, указанные на Сайте, пользователь подтверждает согласие с условиями настоящей Политикой.</p>
 
             <h3>1. Какие данные мы собираем</h3>
             <ul>
@@ -855,6 +854,25 @@
     </div>
 
     <script>
+        // ЛОГИКА ОКON (Оферта и Политика)
+        function openDoc(id) {
+            document.getElementById(id).style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDoc(id) {
+            document.getElementById(id).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // АНИМАЦИЯ КОСМОСА НА CANVAS
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -862,15 +880,15 @@
         let height = canvas.height = window.innerHeight;
 
         const particles = [];
-        const maxParticles = window.innerWidth < 768 ? 40 : 90;
+        const maxParticles = window.innerWidth < 768 ? 35 : 85;
 
         class Particle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.4;
-                this.vy = (Math.random() - 0.5) * 0.4;
-                this.radius = Math.random() * 1.8 + 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.radius = Math.random() * 1.5 + 0.5;
             }
 
             update() {
@@ -884,7 +902,7 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(69, 243, 255, 0.45)';
+                ctx.fillStyle = 'rgba(69, 243, 255, 0.4)';
                 ctx.fill();
             }
         }
@@ -907,7 +925,26 @@
                     const dy = particles[i].y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 110) {
+                    if (dist < 100) {
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
-                        Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(69, 243, 255, ${0.12 - dist / 1000})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
