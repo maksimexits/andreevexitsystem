@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Андреев Максим | Наставничество</title>
+    <title>EXIT SYSTEM | Наставничество Андреева Максима</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
             --bg-color: #06070d;
             --card-bg: rgba(20, 24, 38, 0.65);
             --card-border: rgba(69, 243, 255, 0.15);
-            --accent-glow: rgba(69, 243, 255, 0.3);
+            --accent-glow: rgba(69, 243, 255, 0.4);
             --accent-cyan: #45f3ff;
         }
 
@@ -42,54 +42,53 @@
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: #fff;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
+        /* 1. БЛОК ОБО МНЕ */
         .hero {
-            padding: 40px 0 60px;
+            padding: 40px 0 80px;
             text-align: center;
-            position: relative;
         }
 
         h1 {
-            font-size: 44px;
+            font-size: 40px;
             font-weight: 800;
             line-height: 1.2;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
         }
 
         .hero p {
             font-size: 18px;
             color: #94a3b8;
             max-width: 700px;
-            margin: 0 auto 30px;
+            margin: 0 auto 40px;
         }
 
-        /* ГЛАВНОЕ ОТКРЫВАЮЩЕЕ ВИДЕО */
-        .main-video-wrapper {
-            max-width: 800px;
-            margin: 0 auto 50px;
-            position: relative;
+        .main-shorts-wrapper {
+            max-width: 340px;
+            margin: 0 auto 40px;
             border-radius: 24px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 20px 50px rgba(69, 243, 255, 0.1);
         }
 
-        .main-video-container {
+        .video-shorts-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
+            padding-bottom: 177.77%; /* 9:16 */
             height: 0;
+            background: #000;
         }
 
-        .main-video-container iframe {
+        .video-shorts-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -120,10 +119,19 @@
             text-align: center;
             font-size: 32px;
             font-weight: 800;
-            margin: 80px 0 40px;
+            margin: 90px 0 40px;
+            letter-spacing: 1px;
         }
 
-        /* БЛОК СПИН */
+        /* 2. БЛОК КЕЙСОВ */
+        .grid-vertical {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* 3. БЛОК СПИН С ПОДСВЕТКОЙ */
         .spin-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -137,104 +145,71 @@
             border-radius: 24px;
             padding: 40px;
             backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .spin-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px var(--accent-glow);
         }
 
         .spin-card h3 {
             font-size: 24px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: var(--accent-cyan);
         }
 
         .spin-step {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         .spin-step strong {
             display: block;
             color: #ffffff;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             opacity: 0.6;
         }
 
         .spin-step p {
             color: #cbd5e1;
+            font-size: 15px;
         }
 
-        /* БЛОК КЕЙСОВ */
-        .cases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+        /* БЛОК ЦЕНЫ И ГАРАНТИИ ВЕДЕНИЯ ЗА РУКУ */
+        .price-box {
+            max-width: 600px;
+            margin: 50px auto 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(69,243,255,0.05) 0%, rgba(20,24,38,0.5) 100%);
+            border: 1px dashed var(--accent-cyan);
+            padding: 40px;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .price-box:hover {
+            box-shadow: 0 0 25px rgba(69,243,255,0.15);
         }
 
-        .case-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 30px;
-            transition: transform 0.3s ease;
-        }
-
-        .case-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(69, 243, 255, 0.3);
-        }
-
-        .case-badge {
-            display: inline-block;
-            background: rgba(69, 243, 255, 0.1);
-            color: var(--accent-cyan);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .case-result {
-            font-size: 24px;
+        .price-value {
+            font-size: 42px;
             font-weight: 800;
             color: #fff;
             margin-bottom: 10px;
         }
 
-        .case-desc {
-            color: #94a3b8;
-            font-size: 14px;
+        .price-guarantee {
+            font-size: 16px;
+            color: var(--accent-cyan);
+            font-weight: 600;
         }
 
-        /* БЛОК ОТЗЫВОВ */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 177.77%; /* 9:16 */
-            height: 0;
-            overflow: hidden;
-            border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.05);
-            background: #000;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
+        /* 4. БЛОК ОТЗЫВОВ */
         .review-type-title {
             font-size: 18px;
             font-weight: 700;
@@ -245,26 +220,29 @@
 
         /* ПОДВАЛ И СОЦСЕТИ */
         footer {
-            padding: 60px 0 30px;
+            padding: 60px 0 40px;
             border-top: 1px solid rgba(255,255,255,0.05);
             text-align: center;
             font-size: 14px;
             color: #64748b;
-            margin-top: 100px;
+            margin-top: 120px;
         }
 
         .social-links {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .social-links a {
-            display: inline-block;
-            margin: 0 15px;
             color: #fff;
             text-decoration: none;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             transition: color 0.3s ease;
+            padding: 5px 10px;
         }
 
         .social-links a:hover {
@@ -272,13 +250,13 @@
         }
 
         .legal-links {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .legal-links a {
             color: #64748b;
             text-decoration: none;
-            margin: 0 10px;
+            margin: 0 12px;
             font-size: 13px;
             transition: color 0.3s ease;
         }
@@ -289,7 +267,8 @@
 
         @media (max-width: 768px) {
             .spin-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 32px; }
+            h1 { font-size: 30px; }
+            .price-value { font-size: 32px; }
         }
     </style>
 </head>
@@ -297,134 +276,128 @@
 
     <header>
         <div class="container">
-            <div class="logo">Andreev System</div>
+            <div class="logo">Exit System</div>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Твой стабильный поток клиентов из вертикальных видео</h1>
-            <p>Перестань выживать на падающем рынке фриланса. Построй понятную систему, которая будет приносить тебе от 100 000 рублей в месяц без хаоса и выгорания.</p>
-            
-            <!-- ТВОЕ ГЛАВНОЕ ОТКРЫВАЮЩЕЕ ВИДЕО -->
-            <div class="main-video-wrapper">
-                <div class="main-video-container">
-                    <!-- Замени ID видео (после /embed/), если оно изменилось -->
-                    <iframe src="https://www.youtube.com/embed/kgxClckjl7o" allowfullscreen></iframe>
-                </div>
+    <!-- 1. БЛОК ОБО МНЕ -->
+    <section class="hero container">
+        <h1>Андреев Максим | Продюсер & Наставник</h1>
+        <p>Обучаю строить прибыльные контент-агентства с полного нуля. Посмотри видео ниже, чтобы узнать, как работает реклама через вертикальные ролики и сколько на этом можно заработать прямо сейчас.</p>
+        
+        <div class="main-shorts-wrapper">
+            <div class="video-shorts-container">
+                <iframe src="https://www.youtube.com/embed/vYHxq8wJEc0" allowfullscreen></iframe>
             </div>
+        </div>
 
-            <a href="https://t.me/maksimexits" class="btn" target="_blank">Начать наставничество</a>
+        <a href="https://t.me/maksimexits" class="btn" target="_blank">Связаться в Telegram</a>
+    </section>
+
+    <!-- 2. БЛОК КЕЙСОВ -->
+    <section class="container">
+        <h2 class="section-title">Кейсы учеников</h2>
+        <div class="grid-vertical">
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/zygGul-Rwi8" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/cI9cuzXS4J4" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/Iz7jokiBdzE" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/uapytgkWACc" allowfullscreen></iframe></div>
         </div>
     </section>
 
-    <!-- БЛОК СПИН -->
+    <!-- 3. БЛОК СПИН (КОМУ ПОДХОДИТ) + СТОИМОСТЬ -->
     <section class="container">
-        <h2 class="section-title">Кому это на 100% подойдет?</h2>
+        <h2 class="section-title">Кому подходит наставничество?</h2>
         <div class="spin-grid">
+            
             <div class="spin-card">
-                <h3>Начинающим фрилансерам</h3>
+                <h3>С нуля фрилансерам</h3>
                 <div class="spin-step">
                     <strong>Ситуация:</strong>
-                    <p>Ты выучился на востребованную онлайн-профессию, умеешь круто монтировать или упаковывать профили и хочешь работать на себя.</p>
+                    <p>Ты только пришел в онлайн, освоил базовые навыки или хочешь научиться делать контент, но сидишь без постоянной работы.</p>
                 </div>
                 <div class="spin-step">
                     <strong>Проблема:</strong>
-                    <p>Но заказов нет. Ты целыми днями рассылаешь отклики на биржах, сидишь без денег и думаешь, что фриланс — это обман.</p>
+                    <p>Клиентов нет, заказы на биржах стоят копейки, а хаотичные отклики не приносят никакого стабильного результата.</p>
                 </div>
                 <div class="spin-step">
-                    <strong>Что будет, если ничего не менять?</strong>
-                    <p>Энергия кончится, и тебе придется возвращаться на скучную работу в офис за копейки, навсегда забыв про свободу.</p>
+                    <strong>Извлечение (Что будет дальше):</strong>
+                    <p>Если ничего не менять, мотивация пропадет, деньги закончатся и придется возвращаться в обычный найм на унылую работу.</p>
                 </div>
                 <div class="spin-step">
-                    <strong>Решение:</strong>
-                    <p>На наставничестве мы за руку пройдем путь до твоих первых 100 000 рублей. Я дам тебе готовые скрипты и систему привлечения клиентов через короткие ролики.</p>
+                    <strong>Направление (Решение):</strong>
+                    <p>Ты получишь готовую пошаговую систему запуска контент-агентства и начнешь регулярно привлекать клиентов на высокий чек.</p>
                 </div>
             </div>
 
             <div class="spin-card">
-                <h3>Экспертам и самозанятым</h3>
+                <h3>Практикующим экспертам</h3>
                 <div class="spin-step">
                     <strong>Ситуация:</strong>
-                    <p>У тебя уже есть крутой готовый продукт, отличный опыт в своей нише и ты мастерски делаешь свою работу.</p>
+                    <p>У тебя уже есть крутой опыт, навыки и продукт, который ты успешно продаешь, но развиваешься хаотично.</p>
                 </div>
                 <div class="spin-step">
                     <strong>Проблема:</strong>
-                    <p>Но у тебя «то густо, то пусто». Сарафанка работает нестабильно, а как регулярно привлекать новых людей из интернета — непонятно.</p>
+                    <p>Постоянно работает только нестабильное сарафанное радио, а системного, управляемого потока клиентов из интернета нет.</p>
                 </div>
                 <div class="spin-step">
-                    <strong>Что будет, если ничего не менять?</strong>
-                    <p>Ты застрянешь на одном уровне дохода, начнешь снижать цены из-за страха остаться без заказов и полностью выгоришь.</p>
+                    <strong>Извлечение (Что будет дальше):</strong>
+                    <p>Ты застрянешь на текущем потолке дохода, начнешь выгорать из-за операционки и упустишь огромный объем рынка.</p>
                 </div>
                 <div class="spin-step">
-                    <strong>Решение:</strong>
-                    <p>Мы внедрим в твой бизнес мощную воронку через Shorts/Reels. Твои ролики начнут смотреть целевые покупатели, которые сами будут писать тебе в личку.</p>
+                    <strong>Направление (Решение):</strong>
+                    <p>Мы внедрим автоматическую воронку через вертикальный контент, которая будет приводить лояльных покупателей на твой продукт.</p>
                 </div>
             </div>
+
+        </div>
+
+        <!-- КАРТОЧКА С СТОИМОСТЬЮ И ГАРАНТИЕЙ -->
+        <div class="price-box">
+            <div class="price-value">100 000 ₽</div>
+            <div class="price-guarantee">Лично веду тебя за руку до результата в 100 000 — 150 000 рублей</div>
         </div>
     </section>
 
-    <!-- БЛОК КЕЙСОВ -->
+    <!-- 4. БЛОК ОТЗЫВОВ -->
     <section class="container">
-        <h2 class="section-title">Результаты учеников в цифрах</h2>
-        <div class="cases-grid">
-            <div class="case-card">
-                <span class="case-badge">Ниша: Монтаж и контент</span>
-                <div class="case-result">0 → 120 000 ₽ / мес</div>
-                <p class="case-desc">Построили систему поиска клиентов через Shorts. Закрыли 3 постоянных клиентов на премиум-сопровождение за первую неделю.</p>
-            </div>
-            <div class="case-card">
-                <span class="case-badge">Ниша: Наставничество</span>
-                <div class="case-result">Быстрый старт: 150 000 ₽</div>
-                <p class="case-desc">Внедрил воронку из коротких роликов в Telegram-канал. Получил целевые заявки без вложений в рекламу.</p>
-            </div>
-            <div class="case-card">
-                <span class="case-badge">Ниша: Дизайн и Упаковка</span>
-                <div class="case-result">Х3 к чеку за месяц</div>
-                <p class="case-desc">Ушли от копеечных заказов на биржах. Переупаковали позиционирование и начали продавать комплексные услуги дорого.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- БЛОК ОТЗЫВОВ -->
-    <section class="container">
-        <h2 class="section-title">Честные отзывы участников</h2>
+        <h2 class="section-title">Отзывы участников</h2>
         
         <div class="review-type-title">Формат «Говорящая голова»</div>
-        <div class="reviews-grid">
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/kgxClckjl7o" allowfullscreen></iframe></div>
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/0H0CIwxsrJM" allowfullscreen></iframe></div>
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/Wf36hGCCdi4" allowfullscreen></iframe></div>
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/lsKk7JdX5RQ" allowfullscreen></iframe></div>
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/Av6doWSDXPU" allowfullscreen></iframe></div>
+        <div class="grid-vertical">
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/kgxClckjl7o" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/0H0CIwxsrJM" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/Wf36hGCCdi4" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/lsKk7JdX5RQ" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/Av6doWSDXPU" allowfullscreen></iframe></div>
         </div>
 
-        <div class="review-type-title">Текстовые отзывы (Shorts-формат)</div>
-        <div class="reviews-grid" style="justify-content: center; max-width: 900px; margin: 0 auto;">
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/BDk3NO75Hpo" allowfullscreen></iframe></div>
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/TTXn3iTE4eM" allowfullscreen></iframe></div>
-            <div class="video-container"><iframe src="https://www.youtube.com/embed/4_4kmCJDN2w" allowfullscreen></iframe></div>
+        <div class="review-type-title">Текстовые отзывы (Shorts)</div>
+        <div class="grid-vertical" style="max-width: 900px; margin: 0 auto;">
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/BDk3NO75Hpo" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/TTXn3iTE4eM" allowfullscreen></iframe></div>
+            <div class="video-shorts-container"><iframe src="https://www.youtube.com/embed/4_4kmCJDN2w" allowfullscreen></iframe></div>
         </div>
     </section>
 
-    <!-- ПОДВАЛ -->
+    <!-- 5. ПОДВАЛ И СОЦСЕТИ -->
     <footer>
         <div class="container">
-            <!-- ССЫЛКИ НА СОЦСЕТИ -->
             <div class="social-links">
+                <a href="https://instagram.com/maksimexits" target="_blank">Instagram</a>
                 <a href="https://youtube.com/@maksimexits" target="_blank">YouTube</a>
-                <a href="https://vk.com/maksimexits" target="_blank">ВКонтакте</a>
                 <a href="https://t.me/maksimexits" target="_blank">Telegram</a>
+                <a href="https://vk.com/maksimexits" target="_blank">ВКонтакте</a>
+                <a href="https://threads.net/@maksimexits" target="_blank">Threads</a>
             </div>
             
-            <!-- ЮРИДИЧЕСКИЕ ССЫЛКИ -->
             <div class="legal-links">
                 <a href="https://drive.google.com/file/d/14hzj2DTXE3b6av1tnskeQVBaA_d0oV9V/view?usp=sharing" target="_blank">Публичная оферта</a>
-                <a href="#" onclick="alert('Политика конфиденциальности: Обработка персональных данных производится исключительно в целях обратной связи по вопросам наставничества в соответствии с ФЗ-152 РФ.'); return false;">Политика конфиденциальности</a>
+                <a href="#" onclick="alert('Политика конфиденциальности: Данные обрабатываются исключительно для связи по вопросам обучения и наставничества в рамках ФЗ-152 РФ.'); return false;">Политика конфиденциальности</a>
             </div>
             
             <p>&copy; 2026 Андреев Максим Витальевич. Все права защищены.</p>
-            <p style="font-size: 11px; margin-top: 10px; opacity: 0.3;">Договор-оферта вступает в силу с даты её публикации: 25 июня 2026 года</p>
+            <p style="font-size: 11px; margin-top: 10px; opacity: 0.3;">Статус: Самозанятый | ИНН: 645291744838 | Дата публикации оферты: 25 июня 2026 года</p>
         </div>
     </footer>
 
